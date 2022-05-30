@@ -17,8 +17,14 @@ class App():
                          border='5')
         msg_text.pack()
 
-        with open("log.txt", "a") as self.file:
-            self.file.write(self.ent_msg.get() + " " + encode(self.ent_msg.get(), self.s) + '\n')
+
+        codded=encode(self.ent_msg.get(), self.s)
+
+        # with open("log.txt", "a") as self.file:
+        #     self.file.write(self.ent_msg.get() + " " + encode(codded) + '\n')
+
+        self.encoded.configure(text="Закодированое сообщение:"+encode(self.ent_msg.get(), self.s))
+        self.decoded.configure(text="Декодированое сообщение:"+decode(codded,self.s))
 
     def addSum(self, s1, s2, s3):
         s_num = (str(s1.get()) + str(s2.get()) + str(s3.get())).replace('0', '')
@@ -31,11 +37,13 @@ class App():
 
         self.summators.configure(text="Сумматоры:{}".format(res))
 
+
+
     def __init__(self):
         self.s = []
 
         self.root = Tk()
-        self.root.geometry("666x666")
+        self.root.geometry("1200x666")
 
         self.bg_msg = Frame(self.root, bg='#272928')
         self.bg_msg.pack()
@@ -45,7 +53,7 @@ class App():
         self.ent_msg.pack()
         self.ent_msg.place(bordermode="ignore", width=280, height=35, x=5, y=560)
 
-        self.btn_msg = Button(self.bg_msg, text="Send", bg="#383A39", borderwidth=0, fg='#E4E6E5', command=self.sendMsg)
+        self.btn_msg = Button(self.bg_msg, text="Send", bg="#E4E6E5", borderwidth=0, fg='#383A39', command=self.sendMsg)
         self.btn_msg.pack()
         self.btn_msg.place(bordermode="ignore", width=55, height=35, x=290, y=560)
 
@@ -74,8 +82,12 @@ class App():
         self.summators = Label(self.setting, text="Сумматоры:{}".format(self.s))
         self.summators.grid(row=2)
 
+        self.encoded=Label(self.setting,text="Закодированое сообщение:")
+        self.encoded.grid(row=3)
+
+        self.decoded=Label(self.setting,text="Декодированое сообщение:")
+        self.decoded.grid(row=4)
+
 
 app = App()
 app.root.mainloop()
-with open("otus.txt", "w") as file:
-    file.write("hello world")
